@@ -109,6 +109,7 @@ productRouter.post(
         rating: req.body.rating,
         comment: req.body.comment,
         user: req.user._id,
+        mobileNumber: req.body.mobileNumber,
         name: req.user.name,
       };
       product.reviews.push(review);

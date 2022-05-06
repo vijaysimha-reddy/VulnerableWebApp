@@ -91,11 +91,13 @@ orderRouter.post(
       orderItems: req.body.orderItems,
       user: req.user._id,
       shipping: req.body.shipping,
-      payment: "COD",
+      payment: req.body.payment,
       itemsPrice: req.body.itemsPrice,
       taxPrice: req.body.taxPrice,
       shippingPrice: req.body.shippingPrice,
       totalPrice: req.body.totalPrice,
+      isPaid:true,
+      paidAt: new Date()
     });
     const createdOrder = await order.save();
     res.status(201).send({ message: 'New Order Created', order: createdOrder });
