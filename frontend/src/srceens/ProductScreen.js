@@ -4,33 +4,33 @@ import {
   hideLoading,
   showMessage,
   rerender,
-} from '../utils';
-import { createReview, getProduct } from '../api';
-import Rating from '../components/Rating';
-import { getUserInfo } from '../localStorage';
+} from "../utils";
+import { createReview, getProduct } from "../api";
+import Rating from "../components/Rating";
+import { getUserInfo } from "../localStorage";
 
 const ProductScreen = {
   after_render: () => {
     const request = parseRequestUrl();
-    document.getElementById('add-button').addEventListener('click', () => {
+    document.getElementById("add-button").addEventListener("click", () => {
       document.location.hash = `/cart/${request.id}`;
     });
 
-    if (document.getElementById('review-form')) {
+    if (document.getElementById("review-form")) {
       document
-        .getElementById('review-form')
-        .addEventListener('submit', async (e) => {
+        .getElementById("review-form")
+        .addEventListener("submit", async (e) => {
           e.preventDefault();
           showLoading();
           const data = await createReview(request.id, {
-            comment: document.getElementById('comment').value,
-            rating: document.getElementById('rating').value,
+            comment: document.getElementById("comment").value,
+            rating: document.getElementById("rating").value,
           });
           hideLoading();
           if (data.error) {
             showMessage(data.error);
           } else {
-            showMessage('Review Added Successfully', () => {
+            showMessage("Review Added Successfully", () => {
               rerender(ProductScreen);
             });
           }
@@ -97,7 +97,7 @@ const ProductScreen = {
       </div>
       <div class="content">
       <h2>Reviews</h2>
-      ${product.reviews.length === 0 ? `<div>There is no review.</div>` : ''}  
+      ${product.reviews.length === 0 ? `<div>There is no review.</div>` : ""}  
       <ul class="review">
       ${product.reviews
         .map(
@@ -117,7 +117,7 @@ const ProductScreen = {
             </div>
           </li>`
         )
-        .join('\n')}
+        .join("\n")}
 
         <li>
        

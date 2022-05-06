@@ -1,36 +1,36 @@
-import { update, getMyOrders } from '../api';
-import { getUserInfo, setUserInfo, clearUser } from '../localStorage';
-import { showLoading, hideLoading, showMessage } from '../utils';
+import { update, getMyOrders } from "../api";
+import { getUserInfo, setUserInfo, clearUser } from "../localStorage";
+import { showLoading, hideLoading, showMessage } from "../utils";
 
 const ProfileScreen = {
   after_render: () => {
-    document.getElementById('signout-button').addEventListener('click', () => {
+    document.getElementById("signout-button").addEventListener("click", () => {
       clearUser();
-      document.location.hash = '/';
+      document.location.hash = "/";
     });
     document
-      .getElementById('profile-form')
-      .addEventListener('submit', async (e) => {
+      .getElementById("profile-form")
+      .addEventListener("submit", async (e) => {
         e.preventDefault();
         showLoading();
         const data = await update({
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          password: document.getElementById('password').value,
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
         });
         hideLoading();
         if (data.error) {
           showMessage(data.error);
         } else {
           setUserInfo(data);
-          document.location.hash = '/';
+          document.location.hash = "/";
         }
       });
   },
   render: async () => {
     const { name, email } = getUserInfo();
     if (!name) {
-      document.location.hash = '/';
+      document.location.hash = "/";
     }
     const orders = await getMyOrders();
     return `
@@ -69,12 +69,11 @@ const ProfileScreen = {
         <table>
           <thead>
             <tr>
-              <th>ORDER ID</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
+              <th>Order Id</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Paid</th>
+              <th>Delivered</th>
             </tr>
           </thead>
           <tbody>
@@ -88,13 +87,12 @@ const ProfileScreen = {
             <td>${order._id}</td>
             <td>${order.createdAt}</td>
             <td>${order.totalPrice}</td>
-            <td>${order.paidAt || 'No'}</td>
-            <td>${order.deliveryAt || 'No'}</td>
-            <td><a href="/#/order/${order._id}">DETIALS</a> </td>
+            <td>${order.isPaid ? "Yes" : "No" || "No"}</td>
+            <td>${order.deliveryAt || "No"}</td>
           </tr>
           `
                     )
-                    .join('\n')
+                    .join("\n")
             }
           </tbody>
         </table>

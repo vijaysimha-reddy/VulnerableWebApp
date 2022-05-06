@@ -1,10 +1,11 @@
-import Rating from '../components/Rating';
-import { getProducts } from '../api';
-import { parseRequestUrl } from '../utils';
+import Rating from "../components/Rating";
+import { getProducts } from "../api";
+import { parseRequestUrl } from "../utils";
 
 const HomeScreen = {
   render: async () => {
     const { value } = parseRequestUrl();
+
     const products = await getProducts({ searchKeyword: value });
     if (products.error) {
       return `<div class="error">${products.error}</div>`;
@@ -21,7 +22,7 @@ const HomeScreen = {
             <img src="${product.image}" alt="${product.name}" />
           </a>
         <div class="product-name">
-          <a href="/#/product/1">
+          <a href="/#/product/${product._id}">
             ${product.name}
           </a>
         </div>
@@ -41,7 +42,7 @@ const HomeScreen = {
       </li>
       `
         )
-        .join('\n')}
+        .join("\n")}
     `;
   },
 };

@@ -3,23 +3,23 @@ import {
   getShipping,
   getPayment,
   cleanCart,
-} from '../localStorage';
-import CheckoutSteps from '../components/CheckoutSteps';
-import { showLoading, hideLoading, showMessage } from '../utils';
-import { createOrder } from '../api';
+} from "../localStorage";
+import CheckoutSteps from "../components/CheckoutSteps";
+import { showLoading, hideLoading, showMessage } from "../utils";
+import { createOrder } from "../api";
 
 const convertCartToOrder = () => {
   const orderItems = getCartItems();
   if (orderItems.length === 0) {
-    document.location.hash = '/cart';
+    document.location.hash = "/cart";
   }
   const shipping = getShipping();
   if (!shipping.address) {
-    document.location.hash = '/shipping';
+    document.location.hash = "/shipping";
   }
   const payment = getPayment();
   if (!payment.paymentMethod) {
-    document.location.hash = '/payment';
+    document.location.hash = "/payment";
   }
   const itemsPrice = orderItems.reduce((a, c) => a + c.price * c.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 10;
@@ -38,8 +38,8 @@ const convertCartToOrder = () => {
 const PlaceOrderScreen = {
   after_render: async () => {
     document
-      .getElementById('placeorder-button')
-      .addEventListener('click', async () => {
+      .getElementById("placeorder-button")
+      .addEventListener("click", async () => {
         const order = convertCartToOrder();
         showLoading();
         const data = await createOrder(order);
@@ -48,7 +48,8 @@ const PlaceOrderScreen = {
           showMessage(data.error);
         } else {
           cleanCart();
-          document.location.hash = `/order/${data.order._id}`;
+          alert("Order Placed");
+          document.location.hash = `/profile`;
         }
       });
   },
@@ -108,7 +109,7 @@ const PlaceOrderScreen = {
                 </li>
                 `
                 )
-                .join('\n')}
+                .join("\n")}
             </ul>
           </div>
         </div>
