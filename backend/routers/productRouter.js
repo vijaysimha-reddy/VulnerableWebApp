@@ -22,8 +22,17 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
+    
     const product = await Product.findById(req.params.id);
-    res.send(product);
+
+    if(product){
+      res.send(product);
+    }
+    else{
+
+      res.setHeader("Content-Type","text/html")
+      res.status(404).send("Invalid Product Id:"+req.params.id)
+    }
   })
 );
 

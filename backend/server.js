@@ -8,7 +8,7 @@ import userRouter from './routers/userRouter';
 import orderRouter from './routers/orderRouter';
 import productRouter from './routers/productRouter';
 import uploadRouter from './routers/uploadRouter';
-
+import adminRouter from './routers/adminRouter';
 mongoose
   .connect(config.MONGODB_URL, {
     useNewUrlParser: true,
@@ -26,6 +26,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
+app.use('/api/admin',adminRouter)
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 app.get('/api/paypal/clientId', (req, res) => {
