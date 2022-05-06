@@ -1,17 +1,17 @@
-import express from 'express';
-import expressAsyncHandler from 'express-async-handler';
-import { isAuth, isAdmin } from '../utils';
-import Product from '../models/productModel';
+import express from "express";
+import expressAsyncHandler from "express-async-handler";
+import { isAuth, isAdmin } from "../utils";
+import Product from "../models/productModel";
 
 const productRouter = express.Router();
 productRouter.get(
-  '/',
+  "/",
   expressAsyncHandler(async (req, res) => {
     const searchKeyword = req.query.searchKeyword
       ? {
           name: {
             $regex: req.query.searchKeyword,
-            $options: 'i',
+            $options: "i",
           },
         }
       : {};
@@ -20,46 +20,43 @@ productRouter.get(
   })
 );
 productRouter.get(
-  '/:id',
+  "/:id",
   expressAsyncHandler(async (req, res) => {
-    
     const product = await Product.findById(req.params.id);
 
-    if(product){
+    if (product) {
       res.send(product);
-    }
-    else{
-
-      res.setHeader("Content-Type","text/html")
-      res.status(404).send("Invalid Product Id:"+req.params.id)
+    } else {
+      res.setHeader("Content-Type", "text/html");
+      res.status(404).send("Invalid Product Id:" + req.params.id);
     }
   })
 );
 
 productRouter.post(
-  '/',
+  "/",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
-      name: 'sample product',
-      description: 'sample desc',
-      category: 'sample category',
-      brand: 'sample brand',
-      image: '/images/product-1.jpg',
+      name: "sample product",
+      description: "sample desc",
+      category: "sample category",
+      brand: "sample brand",
+      image: "/images/product-1.jpg",
     });
     const createdProduct = await product.save();
     if (createdProduct) {
       res
         .status(201)
-        .send({ message: 'Product Created', product: createdProduct });
+        .send({ message: "Product Created", product: createdProduct });
     } else {
-      res.status(500).send({ message: 'Error in creating product' });
+      res.status(500).send({ message: "Error in creating product" });
     }
   })
 );
 productRouter.put(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
@@ -75,32 +72,32 @@ productRouter.put(
       product.description = req.body.description;
       const updatedProduct = await product.save();
       if (updatedProduct) {
-        res.send({ message: 'Product Updated', product: updatedProduct });
+        res.send({ message: "Product Updated", product: updatedProduct });
       } else {
-        res.status(500).send({ message: 'Error in updaing product' });
+        res.status(500).send({ message: "Error in updaing product" });
       }
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: "Product Not Found" });
     }
   })
 );
 productRouter.delete(
-  '/:id',
+  "/:id",
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
       const deletedProduct = await product.remove();
-      res.send({ message: 'Product Deleted', product: deletedProduct });
+      res.send({ message: "Product Deleted", product: deletedProduct });
     } else {
-      res.status(404).send({ message: 'Product Not Found' });
+      res.status(404).send({ message: "Product Not Found" });
     }
   })
 );
 
 productRouter.post(
-  '/:id/reviews',
+  "/:id/reviews",
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
@@ -119,11 +116,11 @@ productRouter.post(
       product.numReviews = product.reviews.length;
       const updatedProduct = await product.save();
       res.status(201).send({
-        message: 'Comment Created.',
+        message: "Comment Created.",
         data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
       });
     } else {
-      throw Error('Product does not exist.');
+      throw Error("Product does not exist.");
     }
   })
 );

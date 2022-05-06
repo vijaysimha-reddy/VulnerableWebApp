@@ -25,6 +25,7 @@ const ProductScreen = {
           const data = await createReview(request.id, {
             comment: document.getElementById("comment").value,
             rating: document.getElementById("rating").value,
+            mobileNumber: document.getElementById("phone").value,
           });
           hideLoading();
           if (data.error) {
@@ -142,6 +143,10 @@ const ProductScreen = {
                 <li>
                   <label for="comment">Comment</label>
                   <textarea required  name="comment" id="comment" ></textarea>
+                </li>
+                <li>
+                  <label for="phone">Phone</label>
+                  <input required type="number" name="phone" id="phone" ></input>
                 </li>
                 <li>
                   <button type="submit" class="primary">Submit</button>
