@@ -1,13 +1,3 @@
-# JS AMAZONA
-# Amazona ECommerce Website
-![amazona](/frontend/images/jsamazona.jpg)
-
-Welcome to my React and Node tutorial to build a fully-functional e-commerce website exactly like amazon. Open your code editor and follow me for the next hours to build an e-commerce website using Vanilla JavaScript and Node.JS, ExpressJS and MongoDB.
-
-## Demo Website
-
-- 👉 Heroku : [https://jsamazona.herokuapp.com](https://jsamazona.herokuapp.com)
-
 
 ## Learning
 
